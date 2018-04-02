@@ -66,7 +66,7 @@ getUserInfo()
         lock.disabled = false
         answers.classList.remove('hidden')
         buzzer.classList.add('hidden')
-        let html = '<ul>';
+        let html = '<ul class="view-answers">';
 
        data.choices.forEach( (answer, i) => {
             html += `<li>

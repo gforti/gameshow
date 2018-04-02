@@ -1,6 +1,7 @@
 const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
+const open = require("open")
 
 const app = express();
 const server = http.Server(app);
@@ -34,6 +35,7 @@ app.set('view engine', 'pug')
 
 app.get('/', (req, res) => res.render('index', { title }))
 app.get('/host', (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData())))
+app.get('/view', (req, res) => res.render('view', {}))
 
 io.on('connection', (socket) => {
 
@@ -79,4 +81,7 @@ io.on('connection', (socket) => {
 
 })
 
-server.listen(port, () => console.log('Listening on ', gameUrl))
+server.listen(port, () => {
+    console.log('Listening on ', gameUrl)
+    open(`${gameUrl}/host`)
+})

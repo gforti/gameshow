@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #168eea;
+  background-color: #1b2b34;
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -95,6 +95,8 @@ button:focus {
   letter-spacing: 0.2em;
   outline: none;     
   max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .buzzer:active {
@@ -202,6 +204,71 @@ input[type="submit"][disabled]:hover
 
 
 
+
+ 
+
+ 
+ 
+ .js-lock {
+     font-size: 4.5vw;
+ }
+ 
+ 
+ 
+ 
+ 
+ ul.view-answers  {
+    display: grid;
+    font-size: 3vw;
+    grid-row-gap:    2vw;
+    grid-column-gap: 5vh;
+    list-style-type: upper-alpha;
+    padding: 0;
+    margin: 0;
+    
+}
+
+ul.view-answers li  {
+    grid: column 1fr / auto;
+    color: white;
+    margin-left: 5vw;
+    font-family: sans-serif;
+    font-weight: bold;
+    border: 1px solid #FAC863;
+    border-radius: 5px;
+    border-left-width: 10px;
+    background-color: #a7883d;
+    text-transform: capitalize;    
+}
+
+
+ul.view-answers li:nth-child(1) {
+    background-color: #a7883d;
+    border-color: #FAC863;
+    color: #a7883d;
+}
+
+ul.view-answers li:nth-child(2) {
+    background-color: #9e3844;
+    border-color: #EC5F67;
+    color: #9e3844;
+    
+}
+
+ul.view-answers li:nth-child(3) {
+    background-color: #4f9261;
+    border-color: #99C794;
+    color: #4f9261;
+}
+
+ul.view-answers li:nth-child(4) {
+    background-color: #7e5495;
+    border-color: #C594C5;
+    color: #7e5495;
+    
+}
+
+
 .js-choices input[type="radio"] {
     display: none;
 }
@@ -209,7 +276,6 @@ input[type="submit"][disabled]:hover
 
 .js-choices input[type=radio] + label {
     font-size: 4.5vw;
-    border: 1px solid red;
     color: white;
     padding: 0.4rem;
     width: 100%;
@@ -220,24 +286,6 @@ input[type="submit"][disabled]:hover
 
           
 .js-choices input[type=radio]:checked + label {
-    background-color: red;
- }
- 
- ul {
-    list-style-type: upper-alpha; 
-    padding: 0;
-    margin: 0;
- }
- ul li {
-    margin: 1rem 0;
-    font-size: 4.5vw;
-    color: white;
-    margin-left: 5vw;
-    font-family: sans-serif;
-    font-weight: bold;
- }
- 
- 
- .js-lock {
-     font-size: 4.5vw;
+    background-color: highlight;
+    color: #333;
  }
