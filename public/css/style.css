@@ -1,0 +1,243 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #168eea;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+body,
+input,
+button {
+  font-size: 1em;
+}
+
+p {
+  margin: 2em 0;
+}
+
+ol {
+  font-size: 1.4rem;
+  text-align: left;  
+}
+
+li {
+  margin: 0.5em 0;
+}
+
+.hidden {
+  display: none;
+}
+
+header {  
+  background-color: #fff;
+  color: #000;
+  font-size: 5.5vw;
+  font-weight: bold;
+}
+
+.logo { 
+  max-width: 200px;
+  width: 100%;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 1em;  
+  width: 100%;
+}
+
+input[type="text"],
+input[type="number"],
+button {
+  border: 0;
+  border-radius: 3px;
+  display: block;
+  margin: 1em 0;
+  padding: 0.8em 1em;  
+  width: 100%;  
+}
+
+button {
+  background-color: green;
+  box-shadow: 0 3px 0 0 darkgreen;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+button:active {
+  box-shadow: none;
+  transform: translateY(3px);
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;  
+}
+
+.buzzer {
+  height: 10em;
+  font-size: 2em;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #b01e1e 0%, red 100%);  
+  text-shadow: 0 5px 2px rgba(122,17,8,.8);
+  box-shadow: 0 18px 0 rgb(183,9,0);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  outline: none;     
+  max-width: 400px;
+}
+
+.buzzer:active {
+   box-shadow: 0 1px 0;
+   transition: 0.1s all ease-out;
+}
+
+
+.secondary {
+  background-color: #ddd;
+  color: #333;
+  box-shadow: 0 3px 0 0 #bbb;
+}
+
+.secondary:hover {
+  background-color: #eee;
+  box-shadow: 0 3px 0 0 #ccc;
+}
+
+
+input:required:invalid, 
+select:required:invalid,
+textarea:required:invalid
+{
+  border: 2px solid red;
+}
+
+input:required:valid, 
+select:required:valid,
+textarea:required:valid
+{
+  border: 2px solid green;
+}
+
+.first {
+    background: linear-gradient(to bottom, green 0%, greenyellow 100%);
+    box-shadow: 0 18px 0 green;
+}
+
+.url {
+    font-size: 5.5vw;
+    padding: 0;
+    margin: 0;
+}
+
+.start,
+.pause,
+.btn {
+    width: 30%;
+    display: inline;
+    margin-right: 0.5rem;
+}
+
+.timer {
+    text-align: center;
+    font-size: 6em;
+    margin: 0.5rem;
+    padding: 2rem 0;
+    text-shadow: 5px 5px 5px black;
+    border: 6px solid limegreen;    
+    outline: none;
+}
+
+.is-paused {
+    background-color: red;
+    border-color: red;
+}
+
+.correct,
+.wrong {
+    width: 40%;
+    display: inline;
+    margin-right: 0.5rem;
+}
+
+.correct {
+    background-color: blue;
+}
+.wrong {
+    background-color: red;
+}
+
+.warning {
+   background-color: firebrick;
+}
+
+
+button[disabled]:active, button[disabled],
+input[type="button"][disabled]:active,
+input[type="button"][disabled],
+input[type="submit"][disabled]:active,
+input[type="submit"][disabled] ,
+button[disabled]:hover,
+input[type="button"][disabled]:hover,
+input[type="submit"][disabled]:hover
+{
+  border: 2px outset ButtonFace;
+  color: GrayText;
+  cursor: inherit;
+  background-color: #ddd;
+  background: #ddd;
+  box-shadow: 0 0px 0 0 #ddd;
+}
+
+
+
+
+.js-choices input[type="radio"] {
+    display: none;
+}
+
+
+.js-choices input[type=radio] + label {
+    font-size: 4.5vw;
+    border: 1px solid red;
+    color: white;
+    padding: 0.4rem;
+    width: 100%;
+    display: inline-block;
+    text-transform: capitalize;
+    font-weight: normal;
+ }
+
+          
+.js-choices input[type=radio]:checked + label {
+    background-color: red;
+ }
+ 
+ ul {
+    list-style-type: upper-alpha; 
+    padding: 0;
+    margin: 0;
+ }
+ ul li {
+    margin: 1rem 0;
+    font-size: 4.5vw;
+    color: white;
+    margin-left: 5vw;
+    font-family: sans-serif;
+    font-weight: bold;
+ }
+ 
+ 
+ .js-lock {
+     font-size: 4.5vw;
+ }
