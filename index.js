@@ -72,6 +72,14 @@ io.on('connection', (socket) => {
     data.currentQuestion = (data.currentQuestion + 1) % data.totalQuestions;
   })
 
+  socket.on('selection', (choice) => {
+    io.sockets.emit('answerSelected', choice)
+  })
+
+  socket.on('lock', () => {
+    io.sockets.emit('answerlock', null)
+  })
+
 
   socket.on('disconnect', () => {
     data.users.delete(socket.id)
@@ -83,5 +91,5 @@ io.on('connection', (socket) => {
 
 server.listen(port, () => {
     console.log('Listening on ', gameUrl)
-    open(`${gameUrl}/host`)
+    // open(`${gameUrl}/host`)
 })

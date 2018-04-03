@@ -80,8 +80,21 @@ getUserInfo()
          })
          html += '</ul>'
          choices.innerHTML = html
+         attachChoiceEvent()
     }
 }
+
+function attachChoiceEvent(){
+    let answer = document.querySelectorAll('input[name="answer"]')
+    answer.forEach( (input) =>{
+        input.addEventListener('click', function() {
+            console.log(this.value)
+            socket.emit('selection', this.value)
+        })
+    })
+
+}
+
 
 function lockChoice(){
     let answer = document.querySelector('input[name="answer"]:checked')

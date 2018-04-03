@@ -234,7 +234,7 @@ ul.view-answers li  {
     margin-left: 5vw;
     font-family: sans-serif;
     font-weight: bold;
-    border: 1px solid #FAC863;
+    border: 2px solid #FAC863;
     border-radius: 5px;
     border-left-width: 10px;
     background-color: #a7883d;
@@ -243,9 +243,9 @@ ul.view-answers li  {
 
 
 ul.view-answers li:nth-child(1) {
-    background-color: #a7883d;
-    border-color: #FAC863;
-    color: #a7883d;
+    background-color: #356997;
+    border-color: #6699CC;
+    color: #356997;
 }
 
 ul.view-answers li:nth-child(2) {
@@ -286,6 +286,14 @@ ul.view-answers li:nth-child(4) {
 
           
 .js-choices input[type=radio]:checked + label {
-    background-color: highlight;
+    background-color: #fbc33b;
     color: #333;
  }
+ 
+ li.highlight {
+    background-color: #fbc33b;
+}
+
+li.highlight span {
+     color: #333;
+}
