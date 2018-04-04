@@ -38,10 +38,11 @@ buzzer.addEventListener('click', (e) => {
 })
 
 
-socket.on('first', (teamId) => {
-    console.log(teamId)
-  if ( teamId === user.team) {
+socket.on('first', (data) => {
+    console.log(data)
+  if ( user.team === data.first) {
       buzzer.classList.add('first')
+      displayChoices(data)
   }
 })
 
@@ -50,10 +51,6 @@ socket.on('clear', () => {
     closeChoice()
 })
 
-socket.on('question', (data) => {
-    console.log(data)
-    displayChoices(data)
-})
 
 getUserInfo()
 
@@ -102,7 +99,7 @@ function lockChoice(){
     if (answer) {
         answer = answer.value
         lock.disabled = true
-        socket.emit('answer', {answer})
+        socket.emit('lock', answer)
         document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
             input.disabled = true
         })

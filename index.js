@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
   socket.on('buzz', (user) => {
     if (!data.first) {
         data.first = user.team
-        socket.emit('first', user.team);
+        socket.emit('first', Object.assign({}, questions[data.currentQuestion], getData()))
     }
     data.buzzes.add(`${user.team}`)
     io.emit('buzzes', [...data.buzzes])
@@ -68,16 +68,16 @@ io.on('connection', (socket) => {
 
 
   socket.on('showQuestion', () => {
+    data.currentQuestion = (data.currentQuestion + 1) % data.totalQuestions
     io.sockets.emit('question', Object.assign({}, questions[data.currentQuestion], getData()))
-    data.currentQuestion = (data.currentQuestion + 1) % data.totalQuestions;
   })
 
   socket.on('selection', (choice) => {
     io.sockets.emit('answerSelected', choice)
   })
 
-  socket.on('lock', () => {
-    io.sockets.emit('answerlock', null)
+  socket.on('lock', (answerChosen) => {
+    io.sockets.emit('answerlock', answerChosen)
   })
 
 
