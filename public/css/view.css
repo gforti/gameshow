@@ -79,7 +79,7 @@ body {
 }
 
 .cross {
-    color: goldenrod;
+   color: goldenrod;
    text-shadow: 0 1px 0 black;
     
 }
@@ -202,30 +202,31 @@ li.locked {
 }
 
 .info {
-    transition: opacity 1s;
+    transition: all .5s;
     
     opacity: 0;
     position: absolute;
-    top: 0;
+    top: -40vh;
     left: 0;
     font-family: 'Montserrat', sans-serif;  
     font-weight: 700;
-    font-size: calc(3em + 7vw);
+    font-size: calc(3em + 1vw);
     text-transform: uppercase;
     
-    width: 100vw;
-    height: 100vh;
+    color: lawngreen;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: darkolivegreen;
-    text-shadow: 1.5px 1.5px 0 #333, 0px 1.5px 0 #333, -1.5px -1.5px 0 #333, -1.5px -1.5px 0 #333, -1.5px 1.5px 0 #333, 1.5px -1.5px 0 #333, 0.7778174593px 0.7778174593px 0 #444, 1.5556349186px 1.5556349186px 0 #444, 2.3334523779px 2.3334523779px 0 #444, 3.1112698372px 3.1112698372px 0 #444, 3.8890872965px 3.8890872965px 0 #444, 4.6669047558px 4.6669047558px 0 #444, 5.4447222151px 5.4447222151px 0 #444, 6.2225396744px 6.2225396744px 0 #444, 7.0003571337px 7.0003571337px 0 #444, 7.7781745931px 7.7781745931px 0 #444;
+    width: 100vw;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
     overflow: hidden;
 }
 
 .info-display {
+    top: -11vh;
     opacity: 1;
 }
+
 
 .container {
     overflow: hidden;
@@ -258,8 +259,19 @@ li.locked {
 }
 .card div.back {
   transform: rotateY( 180deg );
+  margin-top: 10vh;
+  
 }
 
 .card.flipped {
   transform: rotateY( 180deg );
+}
+
+
+.show {
+    opacity: 1 !important;
+}
+
+.hide {
+    visibility: hidden;
 }

@@ -7,6 +7,7 @@ const info = document.querySelector('.js-info')
 const intro = document.querySelector('.js-intro')
 const container = document.querySelector('.js-container')
 const card = document.querySelector('.js-card')
+const cardBack = document.querySelector('.js-back')
 
 let correctAnswer
 let clockTimer = null
@@ -20,7 +21,6 @@ socket.on('buzzes', (buzzes) => {
     showBuzzTeam = false
     info.innerHTML = `Team ${buzzes[0]}`
     info.classList.add('info-display')
-    setTimeout( ()=>{ info.classList.remove('info-display') }, 1000)
   }
 
 
@@ -29,10 +29,28 @@ socket.on('buzzes', (buzzes) => {
 socket.on('question', (data) => {
     console.log(data)
     showBuzzTeam = true
+
+    info.classList.remove('info-display')
+    cardBack.classList.add('hide')
     intro.classList.add('hidden')
     container.classList.remove('hidden')
+
+
     card.classList.remove('flipped')
+
     displayChoices(data)
+    setTimer()
+    setTimeout(startTimer, 2500)
+
+
+    setTimeout(()=>{
+        cardBack.classList.remove('hide')
+    }, 1000)
+    setTimeout(()=>{
+        card.classList.add('flipped')
+    }, 1500)
+
+
 })
 
 socket.on('answerSelected', (choice) => {
@@ -59,6 +77,7 @@ socket.on('answerlock', (answerChosen) => {
 function displayChoices(data) {
 
     answers.innerHTML = ''
+    question.innerHTML = ''
     if ( data.choices && data.choices.length ) {
         correctAnswer = data.answer
         timeLeft = data.time
@@ -69,9 +88,6 @@ function displayChoices(data) {
         })
         html += '</ul>'
         answers.innerHTML = html
-        setTimer()
-
-        setTimeout(startTimer, 2000)
     }
 }
 
@@ -82,7 +98,6 @@ function setTimer() {
 }
 
 function startTimer() {
-    card.classList.add('flipped')
     clockTimer = setInterval(countdown, 1000)
 }
 
