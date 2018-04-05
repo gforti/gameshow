@@ -205,6 +205,7 @@ let allTracks = x = tracks.length;
 
 while (x--) {
     tracks[x].addEventListener('ended',playNextTrack);
+    tracks[x].volume = 0.2;
 }
 
 
