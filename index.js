@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
     }
     data.buzzes.add(`${user.team}`)
     io.emit('buzzes', [...data.buzzes])
-    console.log(`${user.team} buzzed in!`)
+    // console.log(`${user.team} buzzed in!`)
   })
 
   socket.on('clear', () => {
@@ -98,7 +98,6 @@ io.on('connection', (socket) => {
         data.first = ''
         io.emit('buzzes', [...data.buzzes])
         io.emit('clear')
-        console.log(`Clear buzzes`)
     }
 
   socket.on('showQuestion', () => {

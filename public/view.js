@@ -53,7 +53,6 @@ socket.on('intro', () => {
 
 socket.on('question', (data) => {
     introTrack.pause()
-    console.log(data)
     showBuzzTeam = true
     info.classList.remove('info-display')
     info.classList.remove('wrong')
@@ -217,7 +216,7 @@ let allTracks = x = tracks.length
 
 while (x--) {
     tracks[x].addEventListener('ended',playNextTrack)
-    tracks[x].volume = 0.2
+    tracks[x].volume = 0.1
 }
 
 

@@ -15,12 +15,20 @@ block content
         button.js-logo.btn='Logo'
         button.js-music.btn.is-paused='Music Toggle'
         button.js-selection.btn.is-paused='Allow Selection'
+        input(name="musicVol" type="range" list="tickmarks" value="10")
+      
 
       div.js-question.view-question Question
       div.js-answers                      
         div.js-choices.host-choices
         p
           button.js-lock.host-lock Lock In
+
+
+    datalist(id="tickmarks")
+        - for (var x = 0; x <= 100; x=x+10)
+            option(value=x)
+        
            
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')

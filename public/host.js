@@ -76,6 +76,7 @@ function toogleSelection() {
 }
 
 function showQuestion() {
+    logo.disabled = true
     socket.emit('showQuestion')
     socket.emit('questionClose')
 }
@@ -133,8 +134,7 @@ function lockChoice(){
 }
 
 function disableChoice() {
-    lock.disabled = true
-    logo.disabled = true
+    lock.disabled = true    
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = true
     })

@@ -42,7 +42,6 @@ buzzer.addEventListener('click', (e) => {
 
 
 socket.on('first', (data) => {
-    console.log(data)
   if ( user.team === data.first) {
       buzzer.classList.add('first')
       if (allowUserSelection)
@@ -101,7 +100,6 @@ function attachChoiceEvent(){
     let answer = document.querySelectorAll('input[name="answer"]')
     answer.forEach( (input) =>{
         input.addEventListener('click', function() {
-            console.log(this.value)
             socket.emit('selection', this.value)
         })
     })
