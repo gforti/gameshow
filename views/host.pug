@@ -17,7 +17,9 @@ block content
         button.js-selection.btn.is-paused='Allow Selection'
         button.js-fx.btn='Sound FX Toggle'
         input(name="musicVol" type="range" list="tickmarks" value="10" step="10")
-      
+        div.js-total-questions.total-questions Question 
+            span=0 
+            =`/${totalQuestions}`
 
       div.js-question.view-question Question
       div.js-answers                      

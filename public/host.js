@@ -8,6 +8,7 @@ const logo = document.querySelector('.js-logo')
 const music = document.querySelector('.js-music')
 const selection = document.querySelector('.js-selection')
 const soundFX = document.querySelector('.js-fx')
+const currentQuestionNumber = document.querySelector('.js-total-questions span')
 
 const answers = document.querySelector('.js-answers')
 const choices = document.querySelector('.js-choices')
@@ -104,6 +105,7 @@ function toogleSelection() {
 
 function showQuestion() {
     logo.disabled = true
+    question.disabled = true
     resetPause()
     socket.emit('showQuestion')
     socket.emit('questionClose')
@@ -133,8 +135,8 @@ socket.on('question', (data) => {
         lock.disabled = false
         viewquestion.innerHTML = data.question
         let html = '<ul class="view-answers host">';
-
-       data.choices.forEach( (answer, i) => {
+        currentQuestionNumber.innerHTML = ~~data.currentQuestion+1
+        data.choices.forEach( (answer, i) => {
             html += `<li>
                     <input  type="radio"
                             name="answer"
@@ -171,6 +173,7 @@ function disableChoice() {
 function enableChoice() {
     lock.disabled = false
     logo.disabled = false
+    question.disabled = false
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = false
     })

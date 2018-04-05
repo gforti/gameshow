@@ -357,6 +357,10 @@ li.highlight span {
     font-weight: bold;
 }
 
+.total-questions {
+    margin: auto;
+}
+
 
 @media screen 
   and (max-device-width: 600px) {
