@@ -89,6 +89,10 @@ io.on('connection', (socket) => {
       clearBuzzers()
   })
 
+  socket.on('logo', () => {
+       io.emit('intro')
+  })
+
     function clearBuzzers() {
         data.buzzes = new Set()
         data.first = ''

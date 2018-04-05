@@ -4,6 +4,7 @@ const buzzList = document.querySelector('.js-buzzes')
 const clear = document.querySelector('.js-clear')
 const question = document.querySelector('.js-question')
 const pause = document.querySelector('.pause')
+const logo = document.querySelector('.js-logo')
 
 
 const answers = document.querySelector('.js-answers')
@@ -28,6 +29,10 @@ socket.on('buzzes', (buzzes) => {
 
 clear.addEventListener('click', () => {
   socket.emit('clear')
+})
+
+logo.addEventListener('click', () => {
+  socket.emit('logo')
 })
 
 

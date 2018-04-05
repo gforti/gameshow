@@ -16,12 +16,19 @@ let timeLeft = 0
 let pauseTime = false
 let showBuzzTeam = false
 
+
+let s_correct = new Audio(`fx/correct.mp3`)
+let s_wrong = new Audio(`fx/wrong.wav`)
+let s_select = new Audio(`fx/select.wav`)
+let s_buzz = new Audio(`fx/buzz4.wav`)
+
 socket.on('buzzes', (buzzes) => {
 
   if (showBuzzTeam && buzzes.length) {
     showBuzzTeam = false
     info.innerHTML = `Team ${buzzes[0]}`
     info.classList.add('info-display')
+    s_buzz.play()
   }
 
 })
@@ -33,6 +40,11 @@ socket.on('clear', () => {
         if (choice) choice.classList.remove('highlight')
         showBuzzTeam = true
     }
+})
+
+socket.on('intro', () => {
+    intro.classList.remove('hidden')
+    container.classList.add('hidden')
 })
 
 socket.on('question', (data) => {
@@ -86,7 +98,7 @@ socket.on('answerlock', (answerChosen) => {
         pauseTime = true
         chosenAnswer = answerChosen
         questionClose()
-
+        s_select.play()
      }
 })
 
@@ -147,7 +159,7 @@ function questionClose() {
     clearInterval(clockTimer)
     socket.emit('questionClose')
     info.classList.add('info-display')
-    setTimeout(showSorrectAnswer, 2000)
+    setTimeout(showSorrectAnswer, 3000)
 }
 
 function showSorrectAnswer() {
@@ -162,9 +174,11 @@ function showSorrectAnswer() {
     if ( correctAnswer.length &&  chosenAnswer.length && chosenAnswer === correctAnswer) {
         info.innerHTML = `Correct`
         info.classList.add('correct')
+        s_correct.play()
     } else {
         info.innerHTML = `Incorrect`
         info.classList.add('wrong')
+        s_wrong.play()
     }
 
 }
