@@ -20,7 +20,8 @@ let soundFXOn = true
 
 let s_correct = new Audio(`fx/correct.mp3`)
 let s_wrong = new Audio(`fx/wrong.wav`)
-let s_select = new Audio(`fx/select.wav`)
+let s_lock = new Audio(`fx/lock.wav`)
+let s_select = new Audio(`fx/select.mp3`)
 let s_buzz = new Audio(`fx/buzz4.wav`)
 
 socket.on('buzzes', (buzzes) => {
@@ -48,7 +49,7 @@ socket.on('intro', () => {
     questionClose(false)
     intro.classList.remove('hidden')
     container.classList.add('hidden')
-    
+
 })
 
 socket.on('question', (data) => {
@@ -92,6 +93,11 @@ function highlightChoice(choice) {
             input.classList.add('highlight')
         }
     })
+     /*if(soundFXOn){
+        s_select.pause();
+        s_select.currentTime = 0
+        s_select.play()
+     }*/
 }
 
 socket.on('answerlock', (answerChosen) => {
@@ -103,7 +109,7 @@ socket.on('answerlock', (answerChosen) => {
         pauseTime = true
         chosenAnswer = answerChosen
         questionClose()
-        if(soundFXOn) s_select.play()
+        if(soundFXOn) s_lock.play()
      }
 })
 
@@ -125,13 +131,13 @@ socket.on('musicToggle', (musicStop) => {
     }
 })
 
-socket.on('musicVolume', (musicVol) => {    
+socket.on('musicVolume', (musicVol) => {
     tracks.forEach((track) => {
         track.volume = musicVol
     })
 })
 
-socket.on('soundFXToggle', (soundFX) => {    
+socket.on('soundFXToggle', (soundFX) => {
     soundFXOn = soundFX
 })
 
@@ -148,15 +154,15 @@ function displayChoices(data) {
     if ( data.choices && data.choices.length ) {
         correctAnswer = data.answer
         timeLeft = data.time
-        question.innerHTML = data.question 
-        
+        question.innerHTML = data.question
+
         let html = `<ul ${data.lock ? 'class="hidden"' : ''}>`;
         data.choices.forEach( (answer, i) => {
             html += `<li data-choice="${answer}"><span>${answer}</span></li>`
         })
         html += '</ul>'
         answers.innerHTML = html
-         
+
     }
 }
 

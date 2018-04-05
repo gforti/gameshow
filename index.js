@@ -13,7 +13,7 @@ var gameUrl = `http://${host_ip}:${port}`
 
 const title = 'Game Show Trivia'
 
-let questions = require('./round1')
+let questions = require('./questions')
 
 let data = {
   users: new Set(),
@@ -129,11 +129,11 @@ io.on('connection', (socket) => {
   socket.on('pauseMusic', (pauseMusic) => {
     io.sockets.emit('musicToggle', pauseMusic)
   })
-  
+
   socket.on('pauseSoundFX', (soundFX) => {
     io.sockets.emit('soundFXToggle', soundFX)
   })
-  
+
   socket.on('volMusic', (vol) => {
     io.sockets.emit('musicVolume', vol)
   })
