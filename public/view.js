@@ -109,6 +109,14 @@ socket.on('pauseQuestion', (timeState) => {
      }
 })
 
+socket.on('musicToggle', (musicStop) => {
+    if (musicStop) {
+        stopTrack()
+    } else {
+        playTrack()
+    }
+})
+
 
 
 
@@ -182,3 +190,36 @@ function showSorrectAnswer() {
     }
 
 }
+
+
+
+
+let tracks = [];
+for (let i = 1; i <= 3; i++)
+tracks.push(new Audio(`tracks/track${i}.mp3`));
+
+tracks.sort(function() {return 0.5 - Math.random()});
+
+let currentTrack = 0;
+let allTracks = x = tracks.length;
+
+while (x--) {
+    tracks[x].addEventListener('ended',playNextTrack);
+}
+
+
+function stopTrack() {
+    tracks[currentTrack].pause();
+}
+
+function playTrack() {
+    tracks[currentTrack].play();
+}
+
+function playNextTrack() {
+     currentTrack = (currentTrack + 1) % allTracks;
+     playTrack();
+}
+
+
+window.addEventListener('DOMContentLoaded', playTrack);

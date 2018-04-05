@@ -127,6 +127,10 @@ io.on('connection', (socket) => {
     io.sockets.emit('pauseQuestion', pauseTime)
   })
 
+  socket.on('pauseMusic', (pauseMusic) => {
+    io.sockets.emit('musicToggle', pauseMusic)
+  })
+
 
   socket.on('disconnect', () => {
     data.users.delete(socket.id)
