@@ -19,7 +19,7 @@ let data = {
   users: new Set(),
   buzzes: new Set(),
   first: '',
-  currentQuestion: 0,
+  currentQuestion: -1,
   totalQuestions:0
 }
 

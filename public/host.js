@@ -50,6 +50,12 @@ soundFX.addEventListener('click', toogleSoundFX)
 selection.addEventListener('click', toogleSelection)
 question.addEventListener('click', showQuestion)
 
+
+function resetPause() {
+    pauseTime = false
+    pause.classList.remove('is-paused')
+}
+
 function pauseTimer() {
     pauseTime = !pauseTime
     socket.emit('pauseTime', pauseTime)
@@ -98,6 +104,7 @@ function toogleSelection() {
 
 function showQuestion() {
     logo.disabled = true
+    resetPause()
     socket.emit('showQuestion')
     socket.emit('questionClose')
 }

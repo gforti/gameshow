@@ -8,7 +8,8 @@ module.exports = [
         'December'
     ],
     answer: 'Christmas',
-    time: 30
+    time: 30,
+    lock: false
 }
 ,
 {
@@ -20,7 +21,19 @@ module.exports = [
         'black'
     ],
     answer: 'blue',
-    time: 30
+    time: 30,
+    lock: false
+}
+,
+{
+    question: "Recite memory qoute",
+    choices: [
+        'correct',
+        'incorrect'
+    ],
+    answer: 'correct',
+    time: 60,
+    lock: true
 }
 ];
 

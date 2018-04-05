@@ -44,7 +44,7 @@ buzzer.addEventListener('click', (e) => {
 socket.on('first', (data) => {
   if ( user.team === data.first) {
       buzzer.classList.add('first')
-      if (allowUserSelection)
+      if (allowUserSelection && !data.lock)
         displayChoices(data)
   }
 })

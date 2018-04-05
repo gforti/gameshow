@@ -148,13 +148,15 @@ function displayChoices(data) {
     if ( data.choices && data.choices.length ) {
         correctAnswer = data.answer
         timeLeft = data.time
-        question.innerHTML = data.question
-        let html = '<ul>';
+        question.innerHTML = data.question 
+        
+        let html = `<ul ${data.lock ? 'class="hidden"' : ''}>`;
         data.choices.forEach( (answer, i) => {
             html += `<li data-choice="${answer}"><span>${answer}</span></li>`
         })
         html += '</ul>'
         answers.innerHTML = html
+         
     }
 }
 

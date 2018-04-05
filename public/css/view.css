@@ -99,7 +99,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 
@@ -283,7 +283,7 @@ li.correct{
 }
 
 .hide {
-    visibility: hidden;
+    visibility: hidden !important;
 }
 
 .wrong {
