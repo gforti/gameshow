@@ -40,6 +40,7 @@ socket.on('clear', () => {
         info.classList.remove('info-display')
         if (choice) choice.classList.remove('highlight')
         showBuzzTeam = true
+        info.innerHTML = ''
     }
 })
 

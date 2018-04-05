@@ -131,6 +131,10 @@ io.on('connection', (socket) => {
     io.sockets.emit('musicToggle', pauseMusic)
   })
 
+  socket.on('allowSelection', (canSelect) => {
+    io.sockets.emit('selectionToggle', canSelect)
+  })
+
 
   socket.on('disconnect', () => {
     data.users.delete(socket.id)
@@ -142,5 +146,6 @@ io.on('connection', (socket) => {
 
 server.listen(port, () => {
     console.log('Listening on ', gameUrl)
-    // open(`${gameUrl}/host`)
+    console.log('Login: host/1220')
+    open(`${gameUrl}/view`)
 })

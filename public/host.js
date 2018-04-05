@@ -6,6 +6,7 @@ const question = document.querySelector('.js-question')
 const pause = document.querySelector('.pause')
 const logo = document.querySelector('.js-logo')
 const music = document.querySelector('.js-music')
+const selection = document.querySelector('.js-selection')
 
 
 const answers = document.querySelector('.js-answers')
@@ -17,6 +18,7 @@ lock.addEventListener('click', lockChoice)
 
 let pauseTime = false
 let pauseMusic = true
+let allowSelection = false
 
 
 socket.on('active', (numberActive) => {
@@ -40,6 +42,7 @@ logo.addEventListener('click', () => {
 
 pause.addEventListener('click', pauseTimer)
 music.addEventListener('click', toogleMusic)
+selection.addEventListener('click', toogleSelection)
 question.addEventListener('click', showQuestion)
 
 function pauseTimer() {
@@ -62,9 +65,19 @@ function toogleMusic() {
     }
 }
 
+function toogleSelection() {
+    allowSelection = !allowSelection
+    socket.emit('allowSelection', allowSelection)
+    if (allowSelection) {
+        selection.classList.remove('is-paused')
+    } else {
+        selection.classList.add('is-paused')
+    }
+}
+
 function showQuestion() {
     socket.emit('showQuestion')
-    socket.emit('disableBuzzer')
+    socket.emit('questionClose')
 }
 
 

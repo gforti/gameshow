@@ -9,7 +9,8 @@ const choices = document.querySelector('.js-choices')
 const lock = document.querySelector('.js-lock')
 
 let user = {},
-    enableBuzzer = false
+    enableBuzzer = false,
+    allowUserSelection = false
 
 const getUserInfo = () => {
   user = JSON.parse(localStorage.getItem('user')) || {}
@@ -44,7 +45,8 @@ socket.on('first', (data) => {
     console.log(data)
   if ( user.team === data.first) {
       buzzer.classList.add('first')
-      displayChoices(data)
+      if (allowUserSelection)
+        displayChoices(data)
   }
 })
 
@@ -59,6 +61,10 @@ socket.on('enableBuzzer', () => {
 
 socket.on('disableBuzzer', () => {
     disableChoice()
+})
+
+socket.on('selectionToggle', (canSelect) => {
+    allowUserSelection = canSelect
 })
 
 
