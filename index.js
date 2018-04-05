@@ -146,6 +146,7 @@ io.on('connection', (socket) => {
 
 server.listen(port, () => {
     console.log('Listening on ', gameUrl)
+    console.log('Host URL: ', `${gameUrl}/host`)
     console.log('Login: host/1220')
     open(`${gameUrl}/view`)
 })
