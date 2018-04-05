@@ -45,8 +45,10 @@ socket.on('clear', () => {
 })
 
 socket.on('intro', () => {
+    questionClose(false)
     intro.classList.remove('hidden')
     container.classList.add('hidden')
+    
 })
 
 socket.on('question', (data) => {
@@ -171,15 +173,16 @@ function countdown() {
 
 }
 
-function questionClose() {
+function questionClose(show = true) {
     clearInterval(clockTimer)
     questionReady = false
     socket.emit('questionClose')
     info.classList.add('info-display')
-    setTimeout(showSorrectAnswer, 3000)
+    if (show)
+        setTimeout(showCorrectAnswer, 3000)
 }
 
-function showSorrectAnswer() {
+function showCorrectAnswer() {
 
     const choices = document.querySelectorAll('li[data-choice]')
     choices.forEach( (input) => {

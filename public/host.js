@@ -134,6 +134,7 @@ function lockChoice(){
 
 function disableChoice() {
     lock.disabled = true
+    logo.disabled = true
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = true
     })
@@ -141,6 +142,7 @@ function disableChoice() {
 
 function enableChoice() {
     lock.disabled = false
+    logo.disabled = false
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = false
     })
