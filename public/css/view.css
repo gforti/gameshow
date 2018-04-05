@@ -197,8 +197,12 @@ li.locked {
     background-color: #fbc33b;
 }
 
-.correct {
-     background-color: green;
+li.correct span {
+    color: black;    
+}
+
+li.correct{
+     background-color: lawngreen;
 }
 
 .info {
@@ -213,7 +217,7 @@ li.locked {
     font-size: calc(3em + 1vw);
     text-transform: uppercase;
     
-    color: lawngreen;
+    color: yellow;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -274,4 +278,12 @@ li.locked {
 
 .hide {
     visibility: hidden;
+}
+
+.wrong {
+    color: red;
+}
+
+.correct {
+    color: lawngreen;
 }

@@ -59,17 +59,29 @@ io.on('connection', (socket) => {
   })
 
   socket.on('clear', () => {
-    data.buzzes = new Set()
-    data.first = ''
-    io.emit('buzzes', [...data.buzzes])
-    io.emit('clear', null)
-    console.log(`Clear buzzes`)
+      clearBuzzers()
   })
 
+    function clearBuzzers() {
+        data.buzzes = new Set()
+        data.first = ''
+        io.emit('buzzes', [...data.buzzes])
+        io.emit('clear', null)
+        console.log(`Clear buzzes`)
+    }
 
   socket.on('showQuestion', () => {
+    clearBuzzers()
     data.currentQuestion = (data.currentQuestion + 1) % data.totalQuestions
     io.sockets.emit('question', Object.assign({}, questions[data.currentQuestion], getData()))
+  })
+
+  socket.on('questionReady', () => {
+    io.sockets.emit('enableBuzzer', null)
+  })
+
+  socket.on('questionClose', () => {
+    io.sockets.emit('disableBuzzer', null)
   })
 
   socket.on('selection', (choice) => {

@@ -10,6 +10,7 @@ const card = document.querySelector('.js-card')
 const cardBack = document.querySelector('.js-back')
 
 let correctAnswer
+let chosenAnswer
 let clockTimer = null
 let timeLeft = 0
 let pauseTime = false
@@ -31,6 +32,8 @@ socket.on('question', (data) => {
     showBuzzTeam = true
 
     info.classList.remove('info-display')
+    info.classList.remove('wrong')
+    info.classList.remove('correct')
     cardBack.classList.add('hide')
     intro.classList.add('hidden')
     container.classList.remove('hidden')
@@ -68,6 +71,9 @@ socket.on('answerlock', (answerChosen) => {
         const choice = document.querySelector('li.highlight')
         choice.classList.add('locked')
         pauseTime = true
+        chosenAnswer = answerChosen
+        questionClose()
+
      }
 })
 
@@ -98,17 +104,43 @@ function setTimer() {
 }
 
 function startTimer() {
+    socket.emit('questionReady')
     clockTimer = setInterval(countdown, 1000)
 }
 
 function countdown() {
     if (timeLeft <= 0) {
-        clearInterval(clockTimer)
+        questionClose()
         return
     }
     if (!pauseTime) {
         timeLeft--
         timer.innerHTML = timeLeft
+    }
+
+}
+
+function questionClose() {
+    clearInterval(clockTimer)
+    socket.emit('questionClose')
+    setTimeout(showSorrectAnswer, 2000)
+}
+
+function showSorrectAnswer() {
+
+    const choices = document.querySelectorAll('li[data-choice]')
+    choices.forEach( (input) => {
+        if ( input.dataset.choice === correctAnswer) {
+            input.classList.add('correct')
+        }
+    })
+
+    if ( correctAnswer.length &&  chosenAnswer.length && chosenAnswer === correctAnswer) {
+        info.innerHTML = `Correct`
+        info.classList.add('correct')
+    } else {
+        info.innerHTML = `Incorrect`
+        info.classList.add('wrong')
     }
 
 }

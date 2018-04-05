@@ -85,4 +85,5 @@ function countdown() {
 
 function showQuestion() {
     socket.emit('showQuestion')
+    socket.emit('disableBuzzer')
 }

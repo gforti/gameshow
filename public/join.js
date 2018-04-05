@@ -8,7 +8,8 @@ const answers = document.querySelector('.js-answers')
 const choices = document.querySelector('.js-choices')
 const lock = document.querySelector('.js-lock')
 
-let user = {}
+let user = {},
+    enableBuzzer = false
 
 const getUserInfo = () => {
   user = JSON.parse(localStorage.getItem('user')) || {}
@@ -21,6 +22,7 @@ const saveUserInfo = () => {
 }
 
 lock.addEventListener('click', lockChoice)
+buzzer.disabled = true
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -49,6 +51,14 @@ socket.on('first', (data) => {
 socket.on('clear', () => {
     buzzer.classList.remove('first')
     closeChoice()
+})
+
+socket.on('enableBuzzer', () => {
+   buzzer.disabled = false
+})
+
+socket.on('disableBuzzer', () => {
+    disableChoice()
 })
 
 
@@ -98,14 +108,19 @@ function lockChoice(){
 
     if (answer) {
         answer = answer.value
-        lock.disabled = true
+        disableChoice()
         socket.emit('lock', answer)
-        document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
-            input.disabled = true
-        })
-
-        // closeChoice()
     }
+
+}
+
+
+function disableChoice() {
+    buzzer.disabled = true
+    lock.disabled = true
+    document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
+        input.disabled = true
+    })
 
 }
 
