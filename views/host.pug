@@ -2,11 +2,7 @@ extends layout
 
 block content
     header=gameUrl
-    div.container
-        h1.timer 0
-        button.start.sec30='Start 30'
-        button.start.sec60='Start 60'
-        button.pause='Pause'
+   
     div.container      
       h2.js-active=`${users.length} joined`
       ol.js-buzzes
@@ -14,6 +10,13 @@ block content
           li=`${buzz.name} on Team ${buzz.team}`
       button.js-clear.btn='Clear buzzes'
       button.js-question.btn='Show Question'
+      button.pause='Pause'
+
+      div.js-question.view-question Question
+      div.js-answers                      
+        div.js-choices.host-choices
+        p
+          button.js-lock.host-lock Lock In
            
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')

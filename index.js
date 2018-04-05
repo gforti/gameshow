@@ -33,8 +33,35 @@ const getData = () => Object.keys(data).reduce((d, key) => {
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
+
+
+function checkHost(req, res, next) {
+
+  // -----------------------------------------------------------------------
+  // authentication middleware
+
+  const auth = {login: 'host', password: '1220'} // change this
+
+  // parse login and password from headers
+  const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
+  const [login, password] = new Buffer(b64auth, 'base64').toString().split(':')
+
+  // Verify login and password are set and correct
+  if (!login || !password || login !== auth.login || password !== auth.password) {
+    res.set('WWW-Authenticate', 'Basic realm="401"') // change this
+    res.status(401).send('Authentication required.') // custom message
+    return
+  }
+
+  // -----------------------------------------------------------------------
+  // Access granted...
+  next()
+
+}
+
+
 app.get('/', (req, res) => res.render('index', { title }))
-app.get('/host', (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData())))
+app.get('/host', checkHost, (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData())))
 app.get('/view', (req, res) => res.render('view', {}))
 
 io.on('connection', (socket) => {
@@ -66,7 +93,7 @@ io.on('connection', (socket) => {
         data.buzzes = new Set()
         data.first = ''
         io.emit('buzzes', [...data.buzzes])
-        io.emit('clear', null)
+        io.emit('clear')
         console.log(`Clear buzzes`)
     }
 
@@ -90,6 +117,10 @@ io.on('connection', (socket) => {
 
   socket.on('lock', (answerChosen) => {
     io.sockets.emit('answerlock', answerChosen)
+  })
+
+  socket.on('pauseTime', (pauseTime) => {
+    io.sockets.emit('pauseQuestion', pauseTime)
   })
 
 

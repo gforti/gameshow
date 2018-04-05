@@ -9,8 +9,8 @@ const container = document.querySelector('.js-container')
 const card = document.querySelector('.js-card')
 const cardBack = document.querySelector('.js-back')
 
-let correctAnswer
-let chosenAnswer
+let correctAnswer = ''
+let chosenAnswer = ''
 let clockTimer = null
 let timeLeft = 0
 let pauseTime = false
@@ -24,7 +24,15 @@ socket.on('buzzes', (buzzes) => {
     info.classList.add('info-display')
   }
 
+})
 
+socket.on('clear', () => {
+    if (!chosenAnswer.length) {
+        const choice = document.querySelector('li.highlight')
+        info.classList.remove('info-display')
+        if (choice) choice.classList.remove('highlight')
+        showBuzzTeam = true
+    }
 })
 
 socket.on('question', (data) => {
@@ -57,6 +65,10 @@ socket.on('question', (data) => {
 })
 
 socket.on('answerSelected', (choice) => {
+    highlightChoice(choice)
+})
+
+function highlightChoice(choice) {
     const choices = document.querySelectorAll('li[data-choice]')
     choices.forEach( (input) => {
         input.classList.remove('highlight')
@@ -64,9 +76,10 @@ socket.on('answerSelected', (choice) => {
             input.classList.add('highlight')
         }
     })
-})
+}
 
 socket.on('answerlock', (answerChosen) => {
+    highlightChoice(answerChosen)
     if (timeLeft > 0) {
         const choice = document.querySelector('li.highlight')
         choice.classList.add('locked')
@@ -78,12 +91,22 @@ socket.on('answerlock', (answerChosen) => {
 })
 
 
+socket.on('pauseQuestion', (timeState) => {
+    if (timeLeft > 0 && clockTimer) {
+        pauseTime = timeState
+     }
+})
+
+
+
 
 
 function displayChoices(data) {
 
+    info.innerHTML = ''
     answers.innerHTML = ''
     question.innerHTML = ''
+    chosenAnswer = ''
     if ( data.choices && data.choices.length ) {
         correctAnswer = data.answer
         timeLeft = data.time
@@ -123,6 +146,7 @@ function countdown() {
 function questionClose() {
     clearInterval(clockTimer)
     socket.emit('questionClose')
+    info.classList.add('info-display')
     setTimeout(showSorrectAnswer, 2000)
 }
 
