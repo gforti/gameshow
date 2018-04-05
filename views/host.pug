@@ -7,13 +7,14 @@ block content
       h2.js-active=`${users.length} joined`
       ol.js-buzzes
         each buzz in buzzes
-          li=`${buzz.name} on Team ${buzz.team}`
-      button.js-clear.btn='Clear buzzes'
-      button.js-question.btn='Show Question'
-      button.pause.btn='Pause Timer'
-      button.js-logo.btn='Logo'
-      button.js-music.btn.is-paused='Music Toggle'
-      button.js-selection.btn.is-paused='Allow Selection'
+          li=`Team ${buzz}`
+      div.actions
+        button.js-clear.btn='Clear buzzes'
+        button.js-question.btn='Show Question'
+        button.pause.btn='Pause Timer'
+        button.js-logo.btn='Logo'
+        button.js-music.btn.is-paused='Music Toggle'
+        button.js-selection.btn.is-paused='Allow Selection'
 
       div.js-question.view-question Question
       div.js-answers                      

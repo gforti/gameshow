@@ -150,10 +150,21 @@ textarea:required:valid
 .start,
 .pause,
 .btn {
-    width: 30%;
-    display: inline;
-    margin-right: 0.5rem;
+    
+   
+    
 }
+
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat( 4, 1fr);
+    grid-template-rows: repeat( 2, 1fr);
+    grid-row-gap:    1vw;
+    grid-column-gap: 2vw;
+}
+
+
 
 .timer {
     text-align: center;
@@ -351,7 +362,8 @@ li.highlight span {
       font-size: 4.5vw;
     }
     
-    button {
+    button, 
+    .view-question {
         font-size: 6.5vw;
     }
           
@@ -363,6 +375,19 @@ li.highlight span {
     ul.view-answers,
     .js-choices input[type=radio] + label{
         font-size: 6vw;
+    }
+    
+    h2 {
+        font-size: 4vw;
+        margin: 0.4rem;
+    }
+    
+    ol {
+        font-size: 4vw;
+    }
+    
+    .btn {
+        font-size: 3.5vw;
     }
       
 }
