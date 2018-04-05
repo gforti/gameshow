@@ -61,7 +61,7 @@ function checkHost(req, res, next) {
 
 
 app.get('/', (req, res) => res.render('index', { title }))
-app.get('/host', checkHost, (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData())))
+app.get('/host', (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData())))
 app.get('/view', (req, res) => res.render('view', {}))
 
 io.on('connection', (socket) => {
