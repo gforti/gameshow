@@ -7,17 +7,21 @@ const pause = document.querySelector('.pause')
 const logo = document.querySelector('.js-logo')
 const music = document.querySelector('.js-music')
 const selection = document.querySelector('.js-selection')
-
+const soundFX = document.querySelector('.js-fx')
 
 const answers = document.querySelector('.js-answers')
 const choices = document.querySelector('.js-choices')
 const lock = document.querySelector('.js-lock')
 const viewquestion = document.querySelector('.view-question')
+const musicVol = document.querySelector('input[name="musicVol"]')
+
 
 lock.addEventListener('click', lockChoice)
+musicVol.addEventListener('change', updateMusicVol)
 
 let pauseTime = false
 let pauseMusic = true
+let pauseSoundFX = true
 let allowSelection = false
 
 
@@ -42,6 +46,7 @@ logo.addEventListener('click', () => {
 
 pause.addEventListener('click', pauseTimer)
 music.addEventListener('click', toogleMusic)
+soundFX.addEventListener('click', toogleSoundFX)
 selection.addEventListener('click', toogleSelection)
 question.addEventListener('click', showQuestion)
 
@@ -63,6 +68,22 @@ function toogleMusic() {
     } else {
         music.classList.remove('is-paused')
     }
+}
+
+function toogleSoundFX() {
+    pauseSoundFX = !pauseSoundFX
+    socket.emit('pauseSoundFX', pauseSoundFX)
+    if (pauseSoundFX) {
+        soundFX.classList.remove('is-paused')
+    } else {
+        soundFX.classList.add('is-paused')
+    }
+}
+
+function updateMusicVol() {
+   
+    socket.emit('volMusic', musicVol.value*0.01)
+    
 }
 
 function toogleSelection() {

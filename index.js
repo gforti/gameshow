@@ -129,6 +129,14 @@ io.on('connection', (socket) => {
   socket.on('pauseMusic', (pauseMusic) => {
     io.sockets.emit('musicToggle', pauseMusic)
   })
+  
+  socket.on('pauseSoundFX', (soundFX) => {
+    io.sockets.emit('soundFXToggle', soundFX)
+  })
+  
+  socket.on('volMusic', (vol) => {
+    io.sockets.emit('musicVolume', vol)
+  })
 
   socket.on('allowSelection', (canSelect) => {
     io.sockets.emit('selectionToggle', canSelect)

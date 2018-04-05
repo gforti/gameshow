@@ -16,7 +16,7 @@ let timeLeft = 0
 let pauseTime = false
 let showBuzzTeam = false
 let questionReady = false
-
+let soundFXOn = true
 
 let s_correct = new Audio(`fx/correct.mp3`)
 let s_wrong = new Audio(`fx/wrong.wav`)
@@ -29,7 +29,7 @@ socket.on('buzzes', (buzzes) => {
     showBuzzTeam = false
     info.innerHTML = `Team ${buzzes[0]}`
     info.classList.add('info-display')
-    s_buzz.play()
+    if (soundFXOn) s_buzz.play()
   }
 
 })
@@ -103,7 +103,7 @@ socket.on('answerlock', (answerChosen) => {
         pauseTime = true
         chosenAnswer = answerChosen
         questionClose()
-        s_select.play()
+        if(soundFXOn) s_select.play()
      }
 })
 
@@ -123,6 +123,16 @@ socket.on('musicToggle', (musicStop) => {
     } else {
         playTrack()
     }
+})
+
+socket.on('musicVolume', (musicVol) => {    
+    tracks.forEach((track) => {
+        track.volume = musicVol
+    })
+})
+
+socket.on('soundFXToggle', (soundFX) => {    
+    soundFXOn = soundFX
 })
 
 
@@ -193,11 +203,11 @@ function showCorrectAnswer() {
     if ( correctAnswer.length &&  chosenAnswer.length && chosenAnswer === correctAnswer) {
         info.innerHTML = `Correct`
         info.classList.add('correct')
-        s_correct.play()
+        if(soundFXOn) s_correct.play()
     } else {
         info.innerHTML = `Incorrect`
         info.classList.add('wrong')
-        s_wrong.play()
+        if(soundFXOn) s_wrong.play()
     }
 
 }
