@@ -16,7 +16,7 @@ const viewquestion = document.querySelector('.view-question')
 lock.addEventListener('click', lockChoice)
 
 let pauseTime = false
-let pauseMusic = false
+let pauseMusic = true
 
 
 socket.on('active', (numberActive) => {
@@ -68,6 +68,15 @@ function showQuestion() {
 }
 
 
+socket.on('enableBuzzer', () => {
+   enableChoice()
+})
+
+socket.on('disableBuzzer', () => {
+   disableChoice()
+})
+
+
 
 socket.on('question', (data) => {
     displayChoices(data)
@@ -115,5 +124,11 @@ function disableChoice() {
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = true
     })
+}
 
+function enableChoice() {
+    lock.disabled = false
+    document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
+        input.disabled = false
+    })
 }

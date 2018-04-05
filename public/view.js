@@ -15,6 +15,7 @@ let clockTimer = null
 let timeLeft = 0
 let pauseTime = false
 let showBuzzTeam = false
+let questionReady = false
 
 
 let s_correct = new Audio(`fx/correct.mp3`)
@@ -23,7 +24,7 @@ let s_select = new Audio(`fx/select.wav`)
 let s_buzz = new Audio(`fx/buzz4.wav`)
 
 socket.on('buzzes', (buzzes) => {
-
+    if (isQuestionClosed()) return
   if (showBuzzTeam && buzzes.length) {
     showBuzzTeam = false
     info.innerHTML = `Team ${buzzes[0]}`
@@ -48,9 +49,9 @@ socket.on('intro', () => {
 })
 
 socket.on('question', (data) => {
+    introTrack.pause()
     console.log(data)
     showBuzzTeam = true
-
     info.classList.remove('info-display')
     info.classList.remove('wrong')
     info.classList.remove('correct')
@@ -77,6 +78,7 @@ socket.on('question', (data) => {
 })
 
 socket.on('answerSelected', (choice) => {
+    if (isQuestionClosed()) return
     highlightChoice(choice)
 })
 
@@ -91,6 +93,7 @@ function highlightChoice(choice) {
 }
 
 socket.on('answerlock', (answerChosen) => {
+    if (isQuestionClosed()) return
     highlightChoice(answerChosen)
     if (timeLeft > 0) {
         const choice = document.querySelector('li.highlight')
@@ -102,6 +105,9 @@ socket.on('answerlock', (answerChosen) => {
      }
 })
 
+function isQuestionClosed() {
+    return !!(chosenAnswer.length || timeLeft <= 0 || !questionReady)
+}
 
 socket.on('pauseQuestion', (timeState) => {
     if (timeLeft > 0 && clockTimer) {
@@ -148,6 +154,7 @@ function setTimer() {
 
 function startTimer() {
     socket.emit('questionReady')
+    questionReady = true
     clockTimer = setInterval(countdown, 1000)
 }
 
@@ -165,6 +172,7 @@ function countdown() {
 
 function questionClose() {
     clearInterval(clockTimer)
+    questionReady = false
     socket.emit('questionClose')
     info.classList.add('info-display')
     setTimeout(showSorrectAnswer, 3000)
@@ -193,34 +201,34 @@ function showSorrectAnswer() {
 
 
 
-
+let introTrack = new Audio(`tracks/intro.mp3`)
 let tracks = [];
 for (let i = 1; i <= 3; i++)
-tracks.push(new Audio(`tracks/track${i}.mp3`));
+tracks.push(new Audio(`tracks/track${i}.mp3`))
 
-tracks.sort(function() {return 0.5 - Math.random()});
+tracks.sort(function() {return 0.5 - Math.random()})
 
-let currentTrack = 0;
-let allTracks = x = tracks.length;
+let currentTrack = 0
+let allTracks = x = tracks.length
 
 while (x--) {
-    tracks[x].addEventListener('ended',playNextTrack);
-    tracks[x].volume = 0.2;
+    tracks[x].addEventListener('ended',playNextTrack)
+    tracks[x].volume = 0.2
 }
 
 
 function stopTrack() {
-    tracks[currentTrack].pause();
+    tracks[currentTrack].pause()
 }
 
 function playTrack() {
-    tracks[currentTrack].play();
+    tracks[currentTrack].play()
 }
 
 function playNextTrack() {
-     currentTrack = (currentTrack + 1) % allTracks;
-     playTrack();
+     currentTrack = (currentTrack + 1) % allTracks
+     playTrack()
 }
 
 
-window.addEventListener('DOMContentLoaded', playTrack);
+window.addEventListener('DOMContentLoaded', ()=>{introTrack.play()})
