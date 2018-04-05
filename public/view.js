@@ -94,7 +94,7 @@ function highlightChoice(choice) {
         }
     })
      /*if(soundFXOn){
-        s_select.pause();
+        s_select.pause()
         s_select.currentTime = 0
         s_select.play()
      }*/
@@ -131,7 +131,17 @@ socket.on('musicToggle', (musicStop) => {
     }
 })
 
+socket.on('introMusicToggle', (musicStop) => {
+    if (musicStop) {
+        introTrack.pause()
+        introTrack.currentTime = 0
+    } else {
+        introTrack.play()
+    }
+})
+
 socket.on('musicVolume', (musicVol) => {
+    introTrack.volume = musicVol
     tracks.forEach((track) => {
         track.volume = musicVol
     })
@@ -223,6 +233,7 @@ function showCorrectAnswer() {
 
 
 let introTrack = new Audio(`tracks/intro.mp3`)
+introTrack.volume = 0.1
 let tracks = [];
 for (let i = 1; i <= 3; i++)
 tracks.push(new Audio(`tracks/track${i}.mp3`))

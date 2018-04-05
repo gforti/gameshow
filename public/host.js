@@ -8,6 +8,7 @@ const logo = document.querySelector('.js-logo')
 const music = document.querySelector('.js-music')
 const selection = document.querySelector('.js-selection')
 const soundFX = document.querySelector('.js-fx')
+const introMusic = document.querySelector('.js-intro-music')
 const currentQuestionNumber = document.querySelector('.js-total-questions span')
 
 const answers = document.querySelector('.js-answers')
@@ -22,7 +23,8 @@ musicVol.addEventListener('change', updateMusicVol)
 
 let pauseTime = false
 let pauseMusic = true
-let pauseSoundFX = true
+let pauseSoundFX = false
+let pauseIntroMusic = true
 let allowSelection = false
 
 
@@ -48,6 +50,7 @@ logo.addEventListener('click', () => {
 pause.addEventListener('click', pauseTimer)
 music.addEventListener('click', toogleMusic)
 soundFX.addEventListener('click', toogleSoundFX)
+introMusic.addEventListener('click', toogleIntroMusic)
 selection.addEventListener('click', toogleSelection)
 question.addEventListener('click', showQuestion)
 
@@ -77,20 +80,30 @@ function toogleMusic() {
     }
 }
 
+function toogleIntroMusic() {
+    pauseIntroMusic = !pauseIntroMusic
+    socket.emit('pauseIntroMusic', pauseIntroMusic)
+    if (pauseIntroMusic) {
+        introMusic.classList.add('is-paused')
+    } else {
+        introMusic.classList.remove('is-paused')
+    }
+}
+
 function toogleSoundFX() {
     pauseSoundFX = !pauseSoundFX
     socket.emit('pauseSoundFX', pauseSoundFX)
     if (pauseSoundFX) {
-        soundFX.classList.remove('is-paused')
-    } else {
         soundFX.classList.add('is-paused')
+    } else {
+        soundFX.classList.remove('is-paused')
     }
 }
 
 function updateMusicVol() {
-   
+
     socket.emit('volMusic', musicVol.value*0.01)
-    
+
 }
 
 function toogleSelection() {
@@ -164,7 +177,7 @@ function lockChoice(){
 }
 
 function disableChoice() {
-    lock.disabled = true    
+    lock.disabled = true
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = true
     })

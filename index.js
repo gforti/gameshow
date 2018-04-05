@@ -130,6 +130,10 @@ io.on('connection', (socket) => {
     io.sockets.emit('musicToggle', pauseMusic)
   })
 
+  socket.on('pauseIntroMusic', (pauseIntroMusic) => {
+    io.sockets.emit('introMusicToggle', pauseIntroMusic)
+  })
+
   socket.on('pauseSoundFX', (soundFX) => {
     io.sockets.emit('soundFXToggle', soundFX)
   })
