@@ -63,7 +63,7 @@ socket.on('question', (data) => {
     if ( data.choices && data.choices.length ) {
         lock.disabled = false
         viewquestion.innerHTML = data.question
-        let html = '<ul class="view-answers">';
+        let html = '<ul class="view-answers host">';
 
        data.choices.forEach( (answer, i) => {
             html += `<li>
