@@ -21,6 +21,7 @@ block content
         div.js-total-questions.total-questions Question 
             span=`${~~currentQuestion < 0 ? 0 : currentQuestion}`
             =` / ${totalQuestions}`
+        input(name="curQ" type="number" value=`${~~currentQuestion < 0 ? 0 : currentQuestion}` min="1" max=totalQuestions required='required')
 
       div.js-question.view-question Question
       div.js-answers                      

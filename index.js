@@ -172,6 +172,10 @@ io.on('connection', (socket) => {
     io.sockets.emit('resetPause')
   })
 
+  socket.on('updateCurrentQuestion', (num) => {
+    data.currentQuestion = num
+  })
+
   socket.on('disconnect', () => {
     data.users.delete(socket.id)
     io.emit('active', [...data.users].length)

@@ -23,7 +23,8 @@ const saveUserInfo = () => {
 }
 
 lock.addEventListener('click', lockChoice)
-buzzer.disabled = true
+// buzzer.disabled = true
+getUserInfo()
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -43,11 +44,9 @@ buzzer.addEventListener('click', (e) => {
 socket.on('connected', (data) => {
   allowUserSelection = data.allowSelection
 
-console.log(data)
-
   if (data.questionReady)
       buzzer.disabled = false
-  
+
   first(data)
 })
 
@@ -85,7 +84,7 @@ socket.on('selectionToggle', (data) => {
 })
 
 
-getUserInfo()
+
 
 
 

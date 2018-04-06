@@ -16,10 +16,12 @@ const choices = document.querySelector('.js-choices')
 const lock = document.querySelector('.js-lock')
 const viewquestion = document.querySelector('.view-question')
 const musicVol = document.querySelector('input[name="musicVol"]')
+const currQuestion = document.querySelector('input[name="curQ"]')
 
 
 lock.addEventListener('click', lockChoice)
 musicVol.addEventListener('change', updateMusicVol)
+currQuestion.addEventListener('change', updateCurrQuestion)
 
 let pauseTime = false
 let pauseMusic = true
@@ -115,8 +117,14 @@ function toogleSoundFX() {
 }
 
 function updateMusicVol() {
-
     socket.emit('volMusic', musicVol.value*0.01)
+}
+
+function updateCurrQuestion() {
+    console.log(currQuestion.validity.valid)
+    if (currQuestion.validity.valid) {
+        socket.emit('updateCurrentQuestion', currQuestion.value-2)
+    }
 
 }
 
@@ -166,6 +174,7 @@ socket.on('question', (data) => {
         viewquestion.innerHTML = data.question
         let html = '<ul class="view-answers host">';
         currentQuestionNumber.innerHTML = ~~data.currentQuestion+1
+        currQuestion.value = ~~data.currentQuestion+1
         data.choices.forEach( (answer, i) => {
             html += `<li>
                     <input  type="radio"
