@@ -20,7 +20,8 @@ let questionReady = false
 let soundFXOn = true
 
 let s_correct = new Audio(`fx/correct.mp3`)
-let s_wrong = new Audio(`fx/wrong.wav`)
+let s_wrong = new Audio(`fx/wrong2.mp3`)
+let s_next = new Audio(`fx/wrong.wav`)
 let s_lock = new Audio(`fx/lock.wav`)
 let s_select = new Audio(`fx/select.mp3`)
 let s_buzz = new Audio(`fx/buzz4.wav`)
@@ -99,6 +100,7 @@ function prepareQuestion(data) {
     startTimerTimer = setTimeout(startTimer, 2500)
 
     cardBackTimer = setTimeout(()=>{
+        if(soundFXOn) s_next.play()
         cardBack.classList.remove('hide')
     }, 1000)
     cardTimer = setTimeout(()=>{
