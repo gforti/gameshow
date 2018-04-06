@@ -270,6 +270,9 @@ function showCorrectAnswer() {
 
 let introTrack = new Audio(`tracks/intro.mp3`)
 introTrack.volume = 0.1
+introTrack.addEventListener('ended',()=>{
+    socket.emit('introTrackEnded')
+})
 let tracks = [];
 for (let i = 1; i <= 3; i++)
 tracks.push(new Audio(`tracks/track${i}.mp3`))

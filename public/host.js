@@ -160,6 +160,11 @@ socket.on('resetPause', () => {
    resetPause()
 })
 
+socket.on('introTrackEnd', () => {
+    pauseIntroMusic = true
+    introMusic.classList.add('is-paused')
+})
+
 socket.on('question', (data) => {
     displayChoices(data)
 })
