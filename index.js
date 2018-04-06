@@ -20,10 +20,18 @@ let data = {
   buzzes: new Set(),
   first: '',
   currentQuestion: -1,
-  totalQuestions:0
+  totalQuestions:0,
+  pauseTime: false,
+  pauseMusic: true,
+  pauseSoundFX: false,
+  pauseIntroMusic: true,
+  allowSelection: false,
+  questionReady: false
 }
 
 data.totalQuestions = questions.length
+if ( data.currentQuestion > -1)
+    Object.assign(data, questions[data.currentQuestion])
 
 const getData = () => Object.keys(data).reduce((d, key) => {
   d[key] = data[key] instanceof Set ? [...data[key]] : data[key]
@@ -60,11 +68,14 @@ function checkHost(req, res, next) {
 }
 
 
-app.get('/', (req, res) => res.render('index', { title }))
-app.get('/host', (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData())))
-app.get('/view', (req, res) => res.render('view', {}))
+app.get('/', (req, res) => res.render('index', Object.assign({ title, gameUrl }, getData()) ))
+app.get('/host', (req, res) => res.render('host', Object.assign({ title, gameUrl }, getData()) ))
+app.get('/view', (req, res) => res.render('view', Object.assign({ title, gameUrl }, getData()) ))
 
 io.on('connection', (socket) => {
+
+    socket.emit('connected', getData())
+
 
   socket.on('join', (user) => {
     data.users.add(socket.id)
@@ -78,7 +89,7 @@ io.on('connection', (socket) => {
   socket.on('buzz', (user) => {
     if (!data.first) {
         data.first = user.team
-        socket.emit('first', Object.assign({}, questions[data.currentQuestion], getData()))
+        socket.emit('first', Object.assign({}, getData()))
     }
     data.buzzes.add(`${user.team}`)
     io.emit('buzzes', [...data.buzzes])
@@ -101,16 +112,21 @@ io.on('connection', (socket) => {
     }
 
   socket.on('showQuestion', () => {
+    data.pauseTime = false
+    data.questionReady =  false
     clearBuzzers()
     data.currentQuestion = (data.currentQuestion + 1) % data.totalQuestions
-    io.sockets.emit('question', Object.assign({}, questions[data.currentQuestion], getData()))
+    Object.assign(data, questions[data.currentQuestion])
+    io.sockets.emit('question', Object.assign({}, getData()))
   })
 
   socket.on('questionReady', () => {
+    data.questionReady =  true
     io.sockets.emit('enableBuzzer', null)
   })
 
   socket.on('questionClose', () => {
+    data.questionReady =  false
     io.sockets.emit('disableBuzzer', null)
   })
 
@@ -123,18 +139,22 @@ io.on('connection', (socket) => {
   })
 
   socket.on('pauseTime', (pauseTime) => {
+    data.pauseTime = pauseTime
     io.sockets.emit('pauseQuestion', pauseTime)
   })
 
   socket.on('pauseMusic', (pauseMusic) => {
+      data.pauseMusic = pauseMusic
     io.sockets.emit('musicToggle', pauseMusic)
   })
 
   socket.on('pauseIntroMusic', (pauseIntroMusic) => {
+      data.pauseIntroMusic = pauseIntroMusic
     io.sockets.emit('introMusicToggle', pauseIntroMusic)
   })
 
   socket.on('pauseSoundFX', (soundFX) => {
+      data.pauseSoundFX = soundFX
     io.sockets.emit('soundFXToggle', soundFX)
   })
 
@@ -143,9 +163,14 @@ io.on('connection', (socket) => {
   })
 
   socket.on('allowSelection', (canSelect) => {
-    io.sockets.emit('selectionToggle', canSelect)
+      data.allowSelection = canSelect
+    io.sockets.emit('selectionToggle', Object.assign({}, getData()))
   })
 
+  socket.on('resetHostPause', () => {
+    data.pauseTime = false
+    io.sockets.emit('resetPause')
+  })
 
   socket.on('disconnect', () => {
     data.users.delete(socket.id)
@@ -160,4 +185,5 @@ server.listen(port, () => {
     console.log('Host URL: ', `${gameUrl}/host`)
     console.log('Login: host/1220')
     open(`${gameUrl}/view`)
+    open(`${gameUrl}/host`)
 })

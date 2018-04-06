@@ -251,10 +251,14 @@ ul.view-answers li  {
     border-radius: 5px;
     border-left-width: 10px;
     background-color: #a7883d;
-    text-transform: capitalize;    
+    text-transform: capitalize;  
+    
+    background-color: #3474ad;
+    border-color: #dae0e6;
+    color: #dae0e6;
 }
 
-
+/*
 ul.view-answers li:nth-child(1) {
     background-color: #356997;
     border-color: #6699CC;
@@ -280,7 +284,7 @@ ul.view-answers li:nth-child(4) {
     color: #7e5495;
     
 }
-
+*/
 
 .js-choices input[type="radio"] {
     display: none;

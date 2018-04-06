@@ -28,6 +28,20 @@ let pauseIntroMusic = true
 let allowSelection = false
 
 
+socket.on('connected', (data) => {
+  pauseTime = data.pauseTime
+  pauseMusic = data.pauseMusic
+  pauseSoundFX = data.pauseSoundFX
+  pauseIntroMusic = data.pauseIntroMusic
+  allowSelection = data.allowSelection
+
+
+  if (data.questionReady ) {
+       displayChoices(data)
+    }
+
+})
+
 socket.on('active', (numberActive) => {
   active.innerText = `${numberActive} joined`
 })
@@ -118,7 +132,7 @@ function toogleSelection() {
 
 function showQuestion() {
     logo.disabled = true
-    question.disabled = true
+    // question.disabled = true
     resetPause()
     socket.emit('showQuestion')
     socket.emit('questionClose')
@@ -134,6 +148,9 @@ socket.on('disableBuzzer', () => {
 })
 
 
+socket.on('resetPause', () => {
+   resetPause()
+})
 
 socket.on('question', (data) => {
     displayChoices(data)
@@ -186,7 +203,7 @@ function disableChoice() {
 function enableChoice() {
     lock.disabled = false
     logo.disabled = false
-    question.disabled = false
+    // question.disabled = false
     document.querySelectorAll('input[name="answer"]').forEach( (input) =>{
         input.disabled = false
     })

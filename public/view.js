@@ -14,6 +14,7 @@ let chosenAnswer = ''
 let clockTimer = null
 let timeLeft = 0
 let pauseTime = false
+let pauseMusic = true
 let showBuzzTeam = false
 let questionReady = false
 let soundFXOn = true
@@ -23,6 +24,24 @@ let s_wrong = new Audio(`fx/wrong.wav`)
 let s_lock = new Audio(`fx/lock.wav`)
 let s_select = new Audio(`fx/select.mp3`)
 let s_buzz = new Audio(`fx/buzz4.wav`)
+
+let startTimerTimer =
+    cardBackTimer =
+    cardTimer = null
+
+socket.on('connected', (data) => {
+    pauseTime = data.pauseTime
+    pauseMusic = data.pauseMusic
+    soundFXOn = !data.pauseSoundFX
+
+    playMusic()
+
+    if (data.questionReady ) {
+        socket.emit('clear')
+        prepareQuestion(data)
+    }
+})
+
 
 socket.on('buzzes', (buzzes) => {
     if (isQuestionClosed()) return
@@ -53,6 +72,16 @@ socket.on('intro', () => {
 })
 
 socket.on('question', (data) => {
+
+    prepareQuestion(data)
+})
+
+
+function prepareQuestion(data) {
+    clearTimeout(startTimerTimer)
+    clearTimeout(cardBackTimer)
+    clearTimeout(cardTimer)
+
     introTrack.pause()
     showBuzzTeam = true
     info.classList.remove('info-display')
@@ -67,18 +96,15 @@ socket.on('question', (data) => {
 
     displayChoices(data)
     setTimer()
-    setTimeout(startTimer, 2500)
+    startTimerTimer = setTimeout(startTimer, 2500)
 
-
-    setTimeout(()=>{
+    cardBackTimer = setTimeout(()=>{
         cardBack.classList.remove('hide')
     }, 1000)
-    setTimeout(()=>{
+    cardTimer = setTimeout(()=>{
         card.classList.add('flipped')
     }, 1500)
-
-
-})
+}
 
 socket.on('answerSelected', (choice) => {
     if (isQuestionClosed()) return
@@ -124,12 +150,17 @@ socket.on('pauseQuestion', (timeState) => {
 })
 
 socket.on('musicToggle', (musicStop) => {
-    if (musicStop) {
+    pauseMusic = musicStop
+    playMusic()
+})
+
+function playMusic() {
+    if (pauseMusic) {
         stopTrack()
     } else {
         playTrack()
     }
-})
+}
 
 socket.on('introMusicToggle', (musicStop) => {
     if (musicStop) {
@@ -152,6 +183,10 @@ socket.on('soundFXToggle', (soundFX) => {
 })
 
 
+socket.on('selectionToggle', (data) => {
+    if ( !data.allowSelection )
+        highlightChoice(null)
+})
 
 
 
@@ -180,6 +215,7 @@ function setTimer() {
     clearInterval(clockTimer)
     timer.innerHTML = timeLeft
     pauseTime = false
+    socket.emit('resetHostPause')
 }
 
 function startTimer() {

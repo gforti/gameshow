@@ -11,16 +11,16 @@ block content
       div.actions
         button.js-clear.btn='Clear buzzes'
         button.js-question.btn='Show Question'
-        button.pause.btn='Pause Timer'
+        button.pause.btn(class={'is-paused': pauseTime})='Pause Timer'
         button.js-logo.btn='Logo'
-        button.js-music.btn.is-paused='Music Toggle'
-        button.js-selection.btn.is-paused='Allow Selection'
-        button.js-fx.btn='Sound FX Toggle'
-        button.js-intro-music.btn.is-paused='Intro Music'
-        input(name="musicVol" type="range" list="tickmarks" value="10" step="10")
+        button.js-music.btn(class={'is-paused': pauseMusic})='Music Toggle'
+        button.js-selection.btn(class={'is-paused': !allowSelection})='Allow Selection'
+        button.js-fx.btn(class={'is-paused': pauseSoundFX})='Sound FX Toggle'
+        button.js-intro-music.btn(class={'is-paused': pauseIntroMusic})='Intro Music'
+        input(name="musicVol" type="range" list="tickmarks" value="10" step="5" max="50")
         div.js-total-questions.total-questions Question 
-            span=0 
-            =`/${totalQuestions}`
+            span=`${~~currentQuestion < 0 ? 0 : currentQuestion}`
+            =` / ${totalQuestions}`
 
       div.js-question.view-question Question
       div.js-answers                      
@@ -30,7 +30,7 @@ block content
 
 
     datalist(id="tickmarks")
-        - for (var x = 0; x <= 100; x=x+10)
+        - for (var x = 0; x <= 50; x=x+5)
             option(value=x)
         
            

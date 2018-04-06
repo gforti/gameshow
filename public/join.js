@@ -40,14 +40,31 @@ buzzer.addEventListener('click', (e) => {
   window.navigator.vibrate(300)
 })
 
+socket.on('connected', (data) => {
+  allowUserSelection = data.allowSelection
+
+console.log(data)
+
+  if (data.questionReady)
+      buzzer.disabled = false
+  
+  first(data)
+})
 
 socket.on('first', (data) => {
-  if ( user.team === data.first) {
-      buzzer.classList.add('first')
-      if (allowUserSelection && !data.lock)
-        displayChoices(data)
-  }
+    first(data)
 })
+
+function first(data) {
+    if ( user.team === data.first) {
+        buzzer.classList.add('first')
+        if (allowUserSelection && !data.lock) {
+            displayChoices(data)
+        } else {
+            closeChoice()
+        }
+    }
+}
 
 socket.on('clear', () => {
     buzzer.classList.remove('first')
@@ -62,8 +79,9 @@ socket.on('disableBuzzer', () => {
     disableChoice()
 })
 
-socket.on('selectionToggle', (canSelect) => {
-    allowUserSelection = canSelect
+socket.on('selectionToggle', (data) => {
+    allowUserSelection = data.allowSelection
+    first(data)
 })
 
 
